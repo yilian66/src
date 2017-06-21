@@ -36,11 +36,11 @@ int cgiMain()
 
 	if (Sname[0] == '*')
 	{
-		sprintf(sql, "select * from stu");
+		sprintf(sql, "select * from stu where state!='0'");
 	}
 	else
 	{
-		sprintf(sql, "select * from stu where Sname = '%s'", Sname);
+		sprintf(sql, "select * from stu where Sname = '%s'and state !='0'", Sname);
 	}
 
 

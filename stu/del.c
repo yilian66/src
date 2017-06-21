@@ -10,6 +10,7 @@ int cgiMain()
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
 	char Sno[32] = "\0";
+	char flag[32] = "\0";
 	int status = 0;
 
 
@@ -20,6 +21,12 @@ int cgiMain()
 		return 1;
 	}
 
+		status = cgiFormString("flag",  flag, 32);
+		if (status != cgiFormSuccess)
+		{
+			fprintf(cgiOut, "get flag error!\n");
+			return 1;
+		}
 
 	int ret;
 	char sql[128] = "\0";
@@ -42,16 +49,23 @@ int cgiMain()
 		return -1;
 	}
 
-
-	sprintf(sql, "delete from stu where Sno = %d", atoi(Sno));
-	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
-	{
-		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-		mysql_close(db);
-		return -1;
+	if (flag[0]=='1'){
+     sprintf(sql, "delete from stu where Sno= %d",atoi(Sno));
+		 if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
+ 		{
+ 			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
+ 			mysql_close(db);
+ 			return -1;
+ 		}
+	}else{
+		sprintf(sql, "update stu set state = '0' where Sno= %d",atoi(Sno));
+		if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
+		{
+		 fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
+		 mysql_close(db);
+		 return -1;
+		}
 	}
-
-
 	fprintf(cgiOut, "delete stu ok!\n");
 	mysql_close(db);
 

@@ -82,7 +82,7 @@ int cgiMain()
 
 
 
-	strcpy(sql, "create table stu(Sno int not null primary key, Sname char(20) not null, Snation char(20) not null,Ssex char(16) not null,Sage int not null,Sdept char(20) not null)");
+	strcpy(sql, "create table stu(Sno int not null primary key, Sname char(20) not null, Snation char(20) not null,Ssex char(16) not null,Sage int not null,Sdept char(20) not null, state int(4) default '1')");
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		if (ret != 1)
@@ -95,7 +95,7 @@ int cgiMain()
 
 
 
-	sprintf(sql, "insert into stu values(%d, '%s', '%s', '%s', %d , '%s')", atoi(Sno), Sname, Snation, Ssex, atoi(Sage), Sdept);
+	sprintf(sql, "insert into stu values(%d, '%s', '%s', '%s', %d , '%s', '1')", atoi(Sno), Sname, Snation, Ssex, atoi(Sage), Sdept);
 	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
 	{
 		fprintf(cgiOut, "%s\n", mysql_error(db));

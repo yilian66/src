@@ -14,6 +14,7 @@ clean:
 
 install:
 	cp *.cgi /usr/lib/cgi-bin/sx/
+	sudo cp -r public/ main.html /var/www/html
 	sudo cp -r public/ index.html /var/www/html
 	sudo cp -r public/ course.html /var/www/html
 	sudo cp -r public/ sc.html /var/www/html
