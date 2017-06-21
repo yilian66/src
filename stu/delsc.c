@@ -8,17 +8,16 @@ int cgiMain()
 {
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
-
-	char Sno[32] = "\0";
+  char Sno[32] = "\0";
 	int status = 0;
 
-
-	status = cgiFormString("Sno",  Sno, 32);
+  status = cgiFormString("Sno",  Sno, 32);
 	if (status != cgiFormSuccess)
 	{
 		fprintf(cgiOut, "get Sno error!\n");
 		return 1;
 	}
+
 
 
 	int ret;
@@ -43,7 +42,7 @@ int cgiMain()
 	}
 
 
-	sprintf(sql, "delete from stu where Sno = %d", atoi(Sno));
+	sprintf(sql, "delete from sc where Sno = %d", atoi(Sno));
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
@@ -52,7 +51,7 @@ int cgiMain()
 	}
 
 
-	fprintf(cgiOut, "delete stu ok!\n");
+	fprintf(cgiOut, "delete sc ok!\n");
 	mysql_close(db);
 
 	return 0;

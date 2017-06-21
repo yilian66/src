@@ -8,51 +8,37 @@ int cgiMain()
 {
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
-  char Sno[32] = "\0";
-	char Sname[16] = "\0";
-	char Snation[20] = "\0";
-	char Ssex[16] = "\0";
-	char Sage[16] = "\0";
-	char Sdept[20] = "\0";
+  char Cno[32] = "\0";
+	char Cname[16] = "\0";
+	char Cpno[32] = "\0";
+	char Ccredit[16] = "\0";
 	int status = 0;
 
-	status = cgiFormString("Sno",  Sno, 32);
+	status = cgiFormString("Cno",  Cno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get Sno error!\n");
+		fprintf(cgiOut, "get Cno error!\n");
 		return 1;
 	}
-	status = cgiFormString("Sname",  Sname, 16);
+	status = cgiFormString("Cname",  Cname, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get Sname error!\n");
+		fprintf(cgiOut, "get Cname error!\n");
 		return 1;
 	}
-	status = cgiFormString("Snation",  Snation, 20);
+	status = cgiFormString("Cpno",  Cpno, 32);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get Snation error!\n");
+		fprintf(cgiOut, "get Cpno error!\n");
 		return 1;
 	}
-	status = cgiFormString("Ssex",  Ssex, 16);
+	status = cgiFormString("Ccredit",  Ccredit, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get Ssex error!\n");
-		return 1;
-	}
-	status = cgiFormString("Sage",  Sage, 16);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get Sage error!\n");
+		fprintf(cgiOut, "get Ccredit error!\n");
 		return 1;
 	}
 
-	status = cgiFormString("Sdept",  Sdept, 20);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get Sdept error!\n");
-		return 1;
-	}
 
 	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
@@ -78,7 +64,7 @@ int cgiMain()
 	}
 
 
-	sprintf(sql, "update stu set Sname='%s', Snation='%s', Ssex='%s' ,  Sage= %d , Sdept='%s'  where Sno = %d ", Sname, Snation, Ssex, atoi(Sage), Sdept, atoi(Sno));
+	sprintf(sql, "update course set Cname='%s',   Cpno= %d ,    Ccredit= %d   where Cno = %d ", Cname,  atoi(Cpno),atoi(Ccredit),  atoi(Cno));
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
@@ -88,7 +74,7 @@ int cgiMain()
 
 
 
-	fprintf(cgiOut, "update student ok!\n");
+	fprintf(cgiOut, "update course ok!\n");
 	mysql_close(db);
 	return 0;
 }
