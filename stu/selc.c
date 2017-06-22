@@ -4,12 +4,13 @@
 #include <string.h>
 #include <mysql/mysql.h>
 #include "cgic.h"
-
+char * headname = "head.html";
+char * footname = "footer.html";
 
 int cgiMain()
 {
-
-	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
+FILE * fd;
+fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 /*	fprintf(cgiOut, "<head><meta charset=\"utf-8\"/><title>查询结果</title>\
 			<style>table {width:400px; margin: 50px auto; border: 1px solid gray; border-collapse: collapse; border-spacing: none; text-align:center;}\
 			tr,td,th{border: 1px solid gray;}\
@@ -22,6 +23,20 @@ int cgiMain()
 
 	char Cname[16] = "\0";
 	int status = 0;
+	char ch;
+
+	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
+	if(!(fd = fopen(headname, "r"))){
+		fprintf(cgiOut, "Cannot open file, %s\n", headname);
+		return -1;
+	}
+	ch = fgetc(fd);
+
+	while(ch != EOF){
+		fprintf(cgiOut, "%c", ch);
+		ch = fgetc(fd);
+	}
+	fclose(fd);
 
 	status = cgiFormString("Cname",  Cname, 16);
 	if (status != cgiFormSuccess)
